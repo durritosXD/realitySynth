@@ -1,68 +1,98 @@
-# RealitySynth
+# RealitySynth 🧪
 
-RealitySynth is a full-stack synthetic simulation platform for training and testing AI detection systems. It generates procedural environments, injects anomalies, simulates detector confidence, and exports labeled detection events as JSON or CSV.
+RealitySynth is a sophisticated full-stack synthetic simulation platform designed for training, testing, and benchmarking AI detection systems. It allows users to generate complex procedural environments, inject controlled anomalies, and evaluate how various detector models respond in real-time.
 
-## Stack
+![RealitySynth Dashboard](https://img.shields.io/badge/Status-Active-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
-- React, TypeScript, Vite, Tailwind CSS
-- Zustand state management
-- HTML5 Canvas simulation viewport
-- Node.js, Express, Socket.io
-- PostgreSQL, Prisma ORM
-- JWT authentication
+## 🌟 Key Features
 
-## Local Setup
+- **Procedural Environments**: Simulate diverse scenarios including Traffic, Factory floors, Classrooms, and Disaster zones.
+- **Real-time Physics Engine**: Custom-built HTML5 Canvas engine (`WorldEngine.ts`) managing agent behaviors, collisions, and movement.
+- **Anomaly Injection**: Manually or programmatically inject anomalies (e.g., speed violations, zone intrusions, cluster formations) to test detector sensitivity.
+- **Detector Benchmarking**: Run multiple AI detector configurations simultaneously and compare their confidence scores and latency.
+- **Data Export**: Generate high-fidelity synthetic datasets in JSON or CSV formats for downstream ML training.
+- **Full-Stack Persistence**: Save environments, detector models, and simulation logs to a PostgreSQL database.
 
-```bash
-cd realitysynth
-npm install
-copy .env.example .env
-docker compose up -d postgres
-npm run prisma:migrate
-npm run dev
+## 🛠️ Technology Stack
+
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **State Management**: Zustand
+- **Visualization**: HTML5 Canvas API
+- **Backend**: Node.js, Express, Socket.io (for future real-time sync)
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: JWT-based secure access
+- **Infrastructure**: Docker Compose for easy deployment
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v18+)
+- Docker (for database)
+
+### Installation
+
+1. **Clone and Install**:
+   ```bash
+   git clone https://github.com/durritosXD/realitySynth.git
+   cd realitysynth
+   npm run install:all
+   ```
+
+2. **Environment Setup**:
+   ```bash
+   copy .env.example .env
+   ```
+
+3. **Start Database**:
+   ```bash
+   docker compose up -d postgres
+   ```
+
+4. **Initialize Database Schema**:
+   ```bash
+   npm run prisma:migrate
+   ```
+
+5. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+- **Client**: `http://localhost:5173`
+- **Server**: `http://localhost:4000`
+
+## 🏗️ Architecture
+
+RealitySynth follows a decoupled architecture:
+
+- **`client/`**: Contains the React frontend and the core simulation engine.
+  - `src/engine/`: The heartbeat of the app.
+    - `WorldEngine.ts`: Manages the main simulation loop.
+    - `AgentSystem.ts`: Handles agent lifecycle and physics.
+    - `DetectorSimulator.ts`: Logic for simulating AI model outputs.
+- **`server/`**: Express API providing persistence and auth.
+  - `src/routes/`: API endpoints for environments, models, and events.
+  - `src/prisma/`: Database schema and migrations.
+
+## 📊 Dataset Structure
+
+Exported logs contain detailed telemetry:
+```json
+{
+  "timestamp": 45.2,
+  "environmentType": "traffic",
+  "anomalyType": "overspeed",
+  "detectorId": "YOLO-v8-Custom",
+  "confidence": 0.942,
+  "isAlert": true,
+  "agentCount": 42
+}
 ```
 
-Client: `http://localhost:5173`
+## 📜 License
 
-API: `http://localhost:4000/api/health`
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Environment Variables
-
-```env
-DATABASE_URL="postgresql://realitysynth:realitysynth@localhost:5432/realitysynth?schema=public"
-JWT_SECRET="change-me-in-production"
-PORT=4000
-CLIENT_ORIGIN="http://localhost:5173"
-```
-
-## Main Routes
-
-- `/` landing page
-- `/dashboard` live simulation dashboard
-- `/environments` saved environment management
-- `/datasets` detection log table and exports
-- `/models` detector configuration
-- `/settings` user settings
-- `/auth/login` and `/auth/register`
-
-## API Routes
-
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/environments`
-- `POST /api/environments`
-- `GET /api/environments/:id`
-- `DELETE /api/environments/:id`
-- `GET /api/events`
-- `POST /api/events/bulk`
-- `GET /api/events/export`
-- `GET /api/models`
-- `POST /api/models`
-- `PUT /api/models/:id`
-- `DELETE /api/models/:id`
-
-## Simulation Notes
-
-`client/src/engine/WorldEngine.ts` owns the real-time simulation loop. It creates agents from environment configs, updates movement rules, injects anomalies, computes detector confidence with per-model latency, logs synthetic detection events, supports scheduled anomalies, and exposes snapshots consumed by the dashboard canvas.
-
-Dataset export produces the requested JSON shape and CSV columns from the dashboard and datasets page.
+---
+Created with ❤️ by the RealitySynth Team.
