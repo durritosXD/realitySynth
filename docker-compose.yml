@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: realitysynth
+      POSTGRES_PASSWORD: realitysynth
+      POSTGRES_DB: realitysynth
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://realitysynth:realitysynth@postgres:5432/realitysynth?schema=public
+      JWT_SECRET: change-me
+      CLIENT_ORIGIN: http://localhost:5173
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres-data:

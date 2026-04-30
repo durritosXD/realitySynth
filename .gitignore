@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+dist/
+client/dist/
+server/dist/
+
+# Environment
+.env
+server/.env
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.tsbuildinfo
+package-lock.json
+client/package-lock.json
+server/package-lock.json
+
+# Prisma
+server/prisma/dev.db
+server/prisma/dev.db-journal
