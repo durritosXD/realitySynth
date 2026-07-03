@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: realitysynth-backend
+    env: docker
+    dockerfilePath: server/Dockerfile
+    dockerContext: .
+    plan: free
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_ORIGIN
+        sync: false
